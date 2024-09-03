@@ -48,6 +48,9 @@ public class Estabelecimento {
 		this.tel = tel;
 	}
 	
+	/**
+	 * Apresenta o estabelecimento
+	 */
 	public void apresentarEstabelecimento() {
 		System.out.println("Nome do restaurante:" + this.nome + "\nEndereço: " + this.endereco + "\nTel: " + this.tel);
 	}

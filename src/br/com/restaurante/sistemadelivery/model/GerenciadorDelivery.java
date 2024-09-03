@@ -3,12 +3,20 @@ package br.com.restaurante.sistemadelivery.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.restaurante.sistemadelivery.exception.MotoboyNaoDisponivelException;
+
 public class GerenciadorDelivery {
-    
+    /**
+     * Campos da classe GerenciadorDelivery
+     */
     private List<Motoboy> listaMotoboy;
     private List<Pedido> listaPedido;
     private List<Cliente> listaCliente;
 
+    /**
+     * GET E SET
+     * @return
+     */
     public List<Motoboy> getListaMotoboy() {
         return listaMotoboy;
     }
@@ -28,13 +36,14 @@ public class GerenciadorDelivery {
         this.listaCliente = listaCliente;
     }
     
- // Exceção personalizada
-    public class MotoboyNaoDisponivelException extends Exception {
-        public MotoboyNaoDisponivelException(String mensagem) {
-            super(mensagem);
-        }
-    }
-
+ 
+    /**
+     * Método que aloca os Motoboys para os Clientes e aplica uma regra de exceção, caso não tenha motoboys disponíveis
+     * @param listaMotoboy
+     * @param cliente
+     * @return
+     * @throws MotoboyNaoDisponivelException
+     */
     public Motoboy alocarMotoboy(List<Motoboy> listaMotoboy, Cliente cliente) throws MotoboyNaoDisponivelException {
         System.out.println("\n--- ALOCAÇÃO ---\n");
         Motoboy funcionario = null;
@@ -57,7 +66,13 @@ public class GerenciadorDelivery {
         return funcionario;
     }
 
-    
+    /**
+     * Cria o pedido, passando uma lista de cada classe
+     * @param listaCliente
+     * @param estabelecimento
+     * @param listaMotoboy
+     * @throws MotoboyNaoDisponivelException
+     */
     public void criarPedidos(List<Cliente> listaCliente, Estabelecimento estabelecimento, List<Motoboy> listaMotoboy) throws MotoboyNaoDisponivelException {
     	
     	int pinNumber = 1;

@@ -67,6 +67,9 @@ public class Pedido {
 		this.motoboy = motoboy;
 	}
 	
+	/**
+	 * Sobrescrita para printar uma pensagem sobre o pedido
+	 */
 	@Override
 	public String toString() {
 		return getNumeroPedido() + ": Motoboy " + getMotoboy().getNome() + ", pegou o pedido no Estabelecimento " + getEstabelecimento().getNome() + " e está indo para o cliente " + getCliente().getNome();

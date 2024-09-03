@@ -1,4 +1,5 @@
 package br.com.restaurante.sistemadelivery.test;
+import br.com.restaurante.sistemadelivery.exception.MotoboyNaoDisponivelException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +9,12 @@ import br.com.restaurante.sistemadelivery.model.Estabelecimento;
 import br.com.restaurante.sistemadelivery.model.Motoboy;
 import br.com.restaurante.sistemadelivery.model.Pedido;
 import br.com.restaurante.sistemadelivery.model.GerenciadorDelivery;
-import br.com.restaurante.sistemadelivery.model.GerenciadorDelivery.MotoboyNaoDisponivelException;
+
 
 public class ControleDeTeste {
 
     public static void main(String[] args) {
+    	
         List<Cliente> listaCliente = criarListaClientes();
         List<Motoboy> listaMotoboy = criarListaMotoboys();
         Estabelecimento estabelecimento = criarEstabelecimento();
@@ -25,14 +27,14 @@ public class ControleDeTeste {
             gerenciador.criarPedidos(listaCliente, estabelecimento, listaMotoboy);
         } catch (MotoboyNaoDisponivelException e) {
             System.err.println("Erro: " + e.getMessage());
-            // Aqui você pode tratar o erro de forma apropriada, como registrá-lo ou alertar o usuário.
+            // Para tratar o erro de forma apropriada
         }
     }
     
+    // Cria Lista de Clientes
     public static List<Cliente> criarListaClientes() {
         List<Cliente> listaCliente = new ArrayList<>();
         
-       
         listaCliente.add(new Cliente("Chico", new Endereco("São Paulo", "Tatuapé", "030300")));
         listaCliente.add(new Cliente("Tony", new Endereco("São Paulo", "Belém", "050200")));
         listaCliente.add(new Cliente("Ricardo", new Endereco("São Paulo", "Brás", "087234")));
@@ -41,12 +43,14 @@ public class ControleDeTeste {
         return listaCliente;
     }
     
+    // Cria o estabelecimento
     public static Estabelecimento criarEstabelecimento() {
         Endereco endereco = new Endereco("São Paulo", "Tatuapé", "020500");
         Estabelecimento estabelecimento = new Estabelecimento("Mata Fome", endereco, "(11) 2446-7321");
         return estabelecimento;
     }
     
+    // cria uma lista de Motoboys
     public static List<Motoboy> criarListaMotoboys() {
         List<Motoboy> listaMotoboy = new ArrayList<>();
         
@@ -58,6 +62,7 @@ public class ControleDeTeste {
         return listaMotoboy;
     }
     
+    // Mostra a lista de Clientes
     public static void mostrarListaCliente(List<Cliente> listaCliente) {
         System.out.println("\n--- CLIENTES ---\n");
         for (Cliente cliente : listaCliente) {
@@ -65,6 +70,7 @@ public class ControleDeTeste {
         }
     }
     
+    // 
     public static void mostrarListaMotoboy(List<Motoboy> listaMotoboy) {
         System.out.println("\n--- MOTOBOYS ---\n");
         for (Motoboy motoboy : listaMotoboy) {
