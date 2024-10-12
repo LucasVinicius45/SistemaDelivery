@@ -1,5 +1,7 @@
-package br.com.restaurante.sistemadelivery.test;
-import br.com.restaurante.sistemadelivery.exception.MotoboyNaoDisponivelException;
+package br.com.restaurante.sistemadelivery.view;
+import br.com.restaurante.sistemadelivery.controller.EstabelecimentoController;
+import br.com.restaurante.sistemadelivery.dao.EstabelecimentoDAOImpl;
+import br.com.restaurante.sistemadelivery.exception.DeliveryException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,20 +17,22 @@ public class ControleDeTeste {
 
     public static void main(String[] args) {
     	
-        List<Cliente> listaCliente = criarListaClientes();
-        List<Motoboy> listaMotoboy = criarListaMotoboys();
-        Estabelecimento estabelecimento = criarEstabelecimento();
-        mostrarListaMotoboy(listaMotoboy);
-        mostrarListaCliente(listaCliente);
-        GerenciadorDelivery gerenciador = new GerenciadorDelivery();
-        gerenciador.setListaPedido(new ArrayList <Pedido>());
-        
-        try {
-            gerenciador.criarPedidos(listaCliente, estabelecimento, listaMotoboy);
-        } catch (MotoboyNaoDisponivelException e) {
-            System.err.println("Erro: " + e.getMessage());
-            // Para tratar o erro de forma apropriada
-        }
+    	Estabelecimento estabelecimento = criarEstabelecimento();
+    	EstabelecimentoController  estabelecimentoController = new EstabelecimentoController(true);
+    	estabelecimentoController.incluirEstabelecimento(estabelecimento);
+    	
+		/*
+		 * List<Cliente> listaCliente = criarListaClientes(); List<Motoboy> listaMotoboy
+		 * = criarListaMotoboys();
+		 * 
+		 * mostrarListaMotoboy(listaMotoboy); mostrarListaCliente(listaCliente);
+		 * GerenciadorDelivery gerenciador = new GerenciadorDelivery();
+		 * gerenciador.setListaPedido(new ArrayList <Pedido>());
+		 * 
+		 * try { gerenciador.criarPedidos(listaCliente, estabelecimento, listaMotoboy);
+		 * } catch (DeliveryException e) { System.err.println("Erro: " +
+		 * e.getMessage()); // Para tratar o erro de forma apropriada }
+		 */
     }
     
     // Cria Lista de Clientes
@@ -46,7 +50,7 @@ public class ControleDeTeste {
     // Cria o estabelecimento
     public static Estabelecimento criarEstabelecimento() {
         Endereco endereco = new Endereco("São Paulo", "Tatuapé", "020500");
-        Estabelecimento estabelecimento = new Estabelecimento("Mata Fome", endereco, "(11) 2446-7321");
+        Estabelecimento estabelecimento = new Estabelecimento("Mata Fome Sushi", "Sushi", endereco, "(11) 2336-7321");
         return estabelecimento;
     }
     

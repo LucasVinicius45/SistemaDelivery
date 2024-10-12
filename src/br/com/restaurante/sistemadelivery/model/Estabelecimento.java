@@ -6,6 +6,7 @@ public class Estabelecimento {
 	 * Campos
 	 */
 	private String nome;
+	private String tipo;
 	private Endereco endereco;
 	private String tel;
 	
@@ -14,9 +15,10 @@ public class Estabelecimento {
 	 * @param endereco
 	 * @param tel
 	 */
-	public Estabelecimento(String nome, Endereco endereco, String tel) {
+	public Estabelecimento(String nome, String tipo, Endereco endereco, String tel) {
 		super();
 		this.setNome(nome);
+		this.tipo = tipo;
 		this.endereco = endereco;
 		this.tel = tel;
 	}
@@ -52,6 +54,12 @@ public class Estabelecimento {
 	 * Apresenta o estabelecimento
 	 */
 	public void apresentarEstabelecimento() {
-		System.out.println("Nome do restaurante:" + this.nome + "\nEndereço: " + this.endereco + "\nTel: " + this.tel);
+		System.out.println("Nome do restaurante:" + this.nome + "\nTipo: " +this.tipo + "\nEndereço: " + this.endereco + "\nTel: " + this.tel);
+	}
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 }

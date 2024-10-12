@@ -3,7 +3,7 @@ package br.com.restaurante.sistemadelivery.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.restaurante.sistemadelivery.exception.MotoboyNaoDisponivelException;
+import br.com.restaurante.sistemadelivery.exception.DeliveryException;
 
 public class GerenciadorDelivery {
     /**
@@ -42,9 +42,9 @@ public class GerenciadorDelivery {
      * @param listaMotoboy
      * @param cliente
      * @return
-     * @throws MotoboyNaoDisponivelException
+     * @throws DeliveryException
      */
-    public Motoboy alocarMotoboy(List<Motoboy> listaMotoboy, Cliente cliente) throws MotoboyNaoDisponivelException {
+    public Motoboy alocarMotoboy(List<Motoboy> listaMotoboy, Cliente cliente) throws DeliveryException {
         System.out.println("\n--- ALOCAÇÃO ---\n");
         Motoboy funcionario = null;
         boolean encontrouMotoboy = false;
@@ -60,7 +60,7 @@ public class GerenciadorDelivery {
         }
         
         if (!encontrouMotoboy) {
-            throw new MotoboyNaoDisponivelException("Nenhum motoboy disponível para o cliente " + cliente.getNome() + " no momento.");
+            throw new DeliveryException("Nenhum motoboy disponível para o cliente " + cliente.getNome() + " no momento.");
         }
         
         return funcionario;
@@ -71,9 +71,9 @@ public class GerenciadorDelivery {
      * @param listaCliente
      * @param estabelecimento
      * @param listaMotoboy
-     * @throws MotoboyNaoDisponivelException
+     * @throws DeliveryException
      */
-    public void criarPedidos(List<Cliente> listaCliente, Estabelecimento estabelecimento, List<Motoboy> listaMotoboy) throws MotoboyNaoDisponivelException {
+    public void criarPedidos(List<Cliente> listaCliente, Estabelecimento estabelecimento, List<Motoboy> listaMotoboy) throws DeliveryException {
     	
     	int pinNumber = 1;
     	
