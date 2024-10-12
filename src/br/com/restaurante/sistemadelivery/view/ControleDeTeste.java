@@ -1,16 +1,12 @@
 package br.com.restaurante.sistemadelivery.view;
-import br.com.restaurante.sistemadelivery.controller.EstabelecimentoController;
-import br.com.restaurante.sistemadelivery.dao.EstabelecimentoDAOImpl;
-import br.com.restaurante.sistemadelivery.exception.DeliveryException;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import br.com.restaurante.sistemadelivery.controller.DeliveryController;
 import br.com.restaurante.sistemadelivery.model.Cliente;
 import br.com.restaurante.sistemadelivery.model.Endereco;
 import br.com.restaurante.sistemadelivery.model.Estabelecimento;
 import br.com.restaurante.sistemadelivery.model.Motoboy;
-import br.com.restaurante.sistemadelivery.model.Pedido;
-import br.com.restaurante.sistemadelivery.model.GerenciadorDelivery;
 
 
 public class ControleDeTeste {
@@ -18,7 +14,7 @@ public class ControleDeTeste {
     public static void main(String[] args) {
     	
     	Estabelecimento estabelecimento = criarEstabelecimento();
-    	EstabelecimentoController  estabelecimentoController = new EstabelecimentoController(true);
+    	DeliveryController  estabelecimentoController = new DeliveryController(true);
     	estabelecimentoController.incluirEstabelecimento(estabelecimento);
     	
 		/*
