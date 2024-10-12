@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import br.com.restaurante.sistemadelivery.model.Endereco;
 import br.com.restaurante.sistemadelivery.model.Estabelecimento;
 import br.com.restaurante.sistemadelivery.util.ConexaoBD;
 
@@ -28,31 +29,43 @@ public class EstabelecimentoDAOImpl implements EstabelecimentoDAO {
 	}
 
 	@Override
-	public void incluirEstabelecimento(Estabelecimento estabelecimento) {
-		String sql = "INSERT INTO ESTABELECIMENTO (NOME, TEL) VALUES (?, ?)";
-		
-		try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-        	stmt.setString(1, estabelecimento.getNome());
-            stmt.setString(2, estabelecimento.getTel());
-            
-            
-            
-            int rowsAffected = stmt.executeUpdate();
-            if (rowsAffected > 0) {
-                conn.commit(); // Confirma a transação
-                System.out.println("Estabelecimento inserido!");
-            } else {
-                System.out.println("Nenhuma linha inserida.");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            try {
-                conn.rollback(); // Desfaz a transação em caso de erro
-            } catch (SQLException rollbackException) {
-                rollbackException.printStackTrace();
-            }
-        }
+	public void incluirEstabelecimento(Endereco endereco, Estabelecimento estabelecimento) {
+	    // Instancia o EnderecoDAOImpl para inserir o endereço
+	    EnderecoDAO enderecoDAO = new EnderecoDAOImpl();
+	    
+	    // Primeiro, insere o endereço
+	    Endereco enderecoInserido = enderecoDAO.incluirEndereco(endereco);
+	    
+	    if (enderecoInserido != null) {
+	        // Depois, insere o estabelecimento utilizando o ID do endereço inserido
+	        String sqlEstabelecimento = "INSERT INTO ESTABELECIMENTO (ENDERECO_ID, NOME, TEL) VALUES (?, ?, ?)";
+	        
+	        try (PreparedStatement stmtEstabelecimento = conn.prepareStatement(sqlEstabelecimento)) {
+	            stmtEstabelecimento.setLong(1, enderecoInserido.getId()); // Usa o ID do endereço inserido
+	            stmtEstabelecimento.setString(2, estabelecimento.getNome());
+	            stmtEstabelecimento.setString(3, estabelecimento.getTel());
+	            
+	            int rowsAffectedEstabelecimento = stmtEstabelecimento.executeUpdate();
+	            
+	            if (rowsAffectedEstabelecimento > 0) {
+	                conn.commit(); // Confirma a transação
+	                System.out.println("Estabelecimento de Sushi inserido com sucesso!");
+	            } else {
+	                System.out.println("Nenhuma linha inserida para o estabelecimento.");
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            try {
+	                conn.rollback(); // Desfaz a transação em caso de erro
+	            } catch (SQLException rollbackException) {
+	                rollbackException.printStackTrace();
+	            }
+	        }
+	    } else {
+	        System.out.println("Falha ao inserir o endereço. O estabelecimento não foi inserido.");
+	    }
 	}
+
 	}
 
 

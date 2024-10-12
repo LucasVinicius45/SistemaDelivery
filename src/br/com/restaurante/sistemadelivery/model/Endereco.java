@@ -5,6 +5,8 @@ public class Endereco{
     /**
      * Campos da classe endereço
      */
+	
+	private long id; 
     private String cidade;
     private String bairro;
     private String cep;
@@ -57,4 +59,12 @@ public class Endereco{
     public String toString() {
         return "Cidade: " + this.cidade + ", Bairro: " + this.bairro + ", CEP: " + this.cep;
     }
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 }

@@ -23,8 +23,8 @@ public class DeliveryController {
 		estabelecimentoDAO = EstabelecimentoDAOFactory.criarEstabelecimentoDAO(isSushi);
 	}
 	
-	public void incluirEstabelecimento(Estabelecimento estabelecimento) {
-		estabelecimentoDAO.incluirEstabelecimento(estabelecimento);
+	public void incluirEstabelecimento(Endereco enderecoID, Estabelecimento estabelecimento) {
+		estabelecimentoDAO.incluirEstabelecimento(enderecoID, estabelecimento);
 	}
 	
 	public void incluirEndereco(Endereco endereco) {

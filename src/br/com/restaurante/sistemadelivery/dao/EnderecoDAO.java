@@ -6,5 +6,5 @@ public interface EnderecoDAO {
 	
 	public void criarTabelaEndereco();
 	
-	public void incluirEndereco(Endereco endereco);
+	public Endereco incluirEndereco(Endereco endereco);
 }
