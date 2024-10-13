@@ -1,6 +1,6 @@
 package br.com.restaurante.sistemadelivery.model;
 
-public class Pedido {
+public class Pedido extends GerenciadorDelivery {
 
 	/**
 	 * Campos da classe Pedido

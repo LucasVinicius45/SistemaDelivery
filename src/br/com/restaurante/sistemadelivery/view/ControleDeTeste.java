@@ -14,101 +14,95 @@ import br.com.restaurante.sistemadelivery.model.Pedido;
 
 public class ControleDeTeste {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		Estabelecimento estabelecimento = criarEstabelecimento();
-		
-		
-		List<Cliente> listaCliente = criarListaClientes();
-		mostrarListaCliente(listaCliente);
-		DeliveryController clienteController = new DeliveryController();
-		
-		for (Cliente cliente : listaCliente) {
-		    // clienteController.incluirCliente(cliente.getEndereco(), cliente.getNome(), cliente.getEmail());
-		    
-	}
-		
-		DeliveryController estabelecimentoController = new DeliveryController(true);
-		// estabelecimentoController.incluirEstabelecimento(estabelecimento.getEndereco(), estabelecimento);
+        // Criação do estabelecimento
+        Estabelecimento estabelecimento = criarEstabelecimento();
+        
+        // Criação da lista de clientes e exibição
+        List<Cliente> listaCliente = criarListaClientes();
+        mostrarListaCliente(listaCliente);
+        
+        DeliveryController clienteController = new DeliveryController();
+        
+        // Inserção dos clientes no banco de dados
+        for (Cliente cliente : listaCliente) {
+            clienteController.incluirCliente(cliente.getEndereco(), cliente.getNome(), cliente.getEmail());
+        }
+        
+        // Criação e inserção do estabelecimento no banco de dados
+        DeliveryController estabelecimentoController = new DeliveryController(true);
+        estabelecimentoController.incluirEstabelecimento(estabelecimento.getEndereco(), estabelecimento);
+        
+        // Criação da lista de motoboys e exibição
+        List<Motoboy> listaMotoboy = criarListaMotoboys();
+        mostrarListaMotoboy(listaMotoboy);
+        
+        DeliveryController motoboyController = new DeliveryController();
+        
+        // Inserção dos motoboys no banco de dados
+        for (Motoboy motoboy : listaMotoboy) {
+            motoboyController.incluirMotoboy(motoboy);
+        }
+        
+        // Gerenciamento e criação dos pedidos
+        GerenciadorDelivery gerenciador = new GerenciadorDelivery();
+        gerenciador.setListaPedido(new ArrayList<>());  // Inicializa a lista de pedidos
 
-		
-		List<Motoboy> listaMotoboy = criarListaMotoboys();
-		mostrarListaMotoboy(listaMotoboy); 
-		DeliveryController motoboyController = new DeliveryController();
-		
-		for (Motoboy motoboy : listaMotoboy) {
-		    // motoboyController.incluirMotoboy(motoboy);
-		    
-		}
-		List<Pedido> listaPedido = new ArrayList<>();
-		for(Pedido pedido : listaPedido) {
-			
-			DeliveryController pedidoController = new DeliveryController();
-			pedidoController.incluirPedido(pedido);
-			System.out.println("Funciona");
-		}
-		
-		
-		GerenciadorDelivery gerenciador = new GerenciadorDelivery();
-		gerenciador.setListaPedido(new ArrayList <Pedido>());
-		
-		 try { gerenciador.criarPedidos(listaCliente, estabelecimento, listaMotoboy);
-		 } catch(DeliveryException e) { 
-			 System.err.println("Erro: " + e.getMessage()); // Para tratar o erro de forma apropriada }
-		 }
-		
-		
-			
-		 
-	}
+        try {
+            // Criação dos pedidos e exibição
+            gerenciador.criarPedidos(listaCliente, estabelecimento, listaMotoboy);
+        } catch (DeliveryException e) {
+            System.err.println("Erro: " + e.getMessage()); // Trata exceção caso não haja motoboys disponíveis
+        }
+        
+        // Exibição e inserção dos pedidos no banco de dados
+        DeliveryController pedidoController = new DeliveryController();
+        for (Pedido pedido : gerenciador.getListaPedido()) {
+            pedidoController.incluirPedido(pedido);
+            System.out.println("Pedido inserido: " + pedido.toString());
+        }
+    }
 
-		 
-//	}
+    // Cria uma lista de Clientes
+    public static List<Cliente> criarListaClientes() {
+        List<Cliente> listaCliente = new ArrayList<>();
+        listaCliente.add(new Cliente("Chico", "Chico@gmail.com", new Endereco("São Paulo", "Tatuapé", "030300")));
+        listaCliente.add(new Cliente("Tony", "Tony@gmail.com", new Endereco("São Paulo", "Belém", "050200")));
+        listaCliente.add(new Cliente("Ricardo", "Ricardo@gmail.com", new Endereco("São Paulo", "Brás", "087234")));
+        listaCliente.add(new Cliente("Murilo", "Murilo@gmail.com", new Endereco("São Paulo", "Mooca", "070700")));
+        return listaCliente;
+    }
 
-	// Cria Lista de Clientes
-	public static List<Cliente> criarListaClientes() {
-		List<Cliente> listaCliente = new ArrayList<>();
+    // Cria o Estabelecimento
+    public static Estabelecimento criarEstabelecimento() {
+        Endereco endereco = new Endereco("São Paulo", "Tatuapé", "070300");
+        return new Estabelecimento("Mata Fome Sushi 51", "Sushi", endereco, "(11) 2336-7321");
+    }
 
-		listaCliente.add(new Cliente("Chico", "Chico@gmail.com", new Endereco("São Paulo", "Tatuapé", "030300")));
-		listaCliente.add(new Cliente("Tony", "Tony@gmail.com", new Endereco("São Paulo", "Belém","050200"))); 
-		listaCliente.add(new Cliente("Ricardo", "Ricardo@gmail.com", new Endereco("São Paulo", "Brás", "087234"))); 
-		listaCliente.add(new Cliente("Murilo", "Murilo@gmail.com", new Endereco("São Paulo", "Mooca", "070700")));
+    // Cria uma lista de Motoboys
+    public static List<Motoboy> criarListaMotoboys() {
+        List<Motoboy> listaMotoboy = new ArrayList<>();
+        listaMotoboy.add(new Motoboy("Hugo", "Motocicleta", false));
+        listaMotoboy.add(new Motoboy("Felipe", "Motocicleta", false));
+        listaMotoboy.add(new Motoboy("Guilherme", "Motocicleta", false));
+        listaMotoboy.add(new Motoboy("Yan", "Motocicleta", true));  // Já ocupado
+        return listaMotoboy;
+    }
 
-		return listaCliente;
-	}
+    // Mostra a lista de Clientes
+    public static void mostrarListaCliente(List<Cliente> listaCliente) {
+        System.out.println("\n--- CLIENTES ---\n");
+        for (Cliente cliente : listaCliente) {
+            cliente.apresentarCliente();
+        }
+    }
 
-	// Cria o estabelecimento
-	public static Estabelecimento criarEstabelecimento() {
-		Endereco endereco = new Endereco("São Paulo", "Tatuapé", "070300");
-		Estabelecimento estabelecimento = new Estabelecimento("Mata Fome Sushi 51", "Sushi", endereco, "(11) 2336-7321");
-		return estabelecimento;
-	}
-
-	// cria uma lista de Motoboys
-	public static List<Motoboy> criarListaMotoboys() {
-		List<Motoboy> listaMotoboy = new ArrayList<>();
-
-		listaMotoboy.add(new Motoboy("Hugo", "Motocicleta", false));
-		listaMotoboy.add(new Motoboy("Felipe", "Motocicleta", false));
-		listaMotoboy.add(new Motoboy("Guilherme", "Motocicleta", false));
-		listaMotoboy.add(new Motoboy("Yan", "Motocicleta", true));
-
-		return listaMotoboy;
-	}
-
-	// Mostra a lista de Clientes
-	public static void mostrarListaCliente(List<Cliente> listaCliente) {
-		System.out.println("\n--- CLIENTES ---\n");
-		for (Cliente cliente : listaCliente) {
-			cliente.apresentarCliente();
-		}
-	}
-
-	//
-	public static void mostrarListaMotoboy(List<Motoboy> listaMotoboy) {
-		System.out.println("\n--- MOTOBOYS ---\n");
-		for (Motoboy motoboy : listaMotoboy) {
-			motoboy.apresentarMotoboy();
-		}
-	}
+    // Mostra a lista de Motoboys
+    public static void mostrarListaMotoboy(List<Motoboy> listaMotoboy) {
+        System.out.println("\n--- MOTOBOYS ---\n");
+        for (Motoboy motoboy : listaMotoboy) {
+            motoboy.apresentarMotoboy();
+        }
+    }
 }

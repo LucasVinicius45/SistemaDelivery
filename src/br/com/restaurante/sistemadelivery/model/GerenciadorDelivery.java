@@ -1,8 +1,8 @@
 package br.com.restaurante.sistemadelivery.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import br.com.restaurante.sistemadelivery.dao.PedidoDAOImpl;
 import br.com.restaurante.sistemadelivery.exception.DeliveryException;
 
 public class GerenciadorDelivery {
@@ -12,8 +12,9 @@ public class GerenciadorDelivery {
     private List<Motoboy> listaMotoboy;
     private List<Pedido> listaPedido;
     private List<Cliente> listaCliente;
+   
 
-    /**
+	/**
      * GET E SET
      * @return
      */
@@ -74,29 +75,29 @@ public class GerenciadorDelivery {
      * @throws DeliveryException
      */
     public void criarPedidos(List<Cliente> listaCliente, Estabelecimento estabelecimento, List<Motoboy> listaMotoboy) throws DeliveryException {
-    	
-    	int pinNumber = 1;
-    	
-    	for(Cliente cliente : listaCliente) {
-    		
-    		Pedido pedido = new Pedido("pedido " + pinNumber, String.valueOf(pinNumber));
-    		Motoboy motoboy = alocarMotoboy(listaMotoboy, cliente);
-    		if(motoboy != null) {
-    			pedido.setMotoboy(motoboy);
-    	    	
-        		pedido.setCliente(cliente);
-        		pedido.setEstabelecimento(estabelecimento);
-        		System.out.println(pedido.toString()); 
-        		listaPedido.add(pedido);
-        		pinNumber++;
-    		}
-    		
-    		
-    		
-    		
-    	}
+        int pinNumber = 1;
+
+        for (Cliente cliente : listaCliente) {
+            Pedido pedido = new Pedido("pedido " + pinNumber, String.valueOf(pinNumber));
+            Motoboy motoboy = alocarMotoboy(listaMotoboy, cliente);  // Aloca motoboy
+            if (motoboy != null) {
+                pedido.setMotoboy(motoboy);
+                pedido.setCliente(cliente);
+                pedido.setEstabelecimento(estabelecimento);
+
+                // Insere o pedido no banco de dados
+                PedidoDAOImpl pedidoDAO = new PedidoDAOImpl();
+                pedidoDAO.incluirPedido(pedido);
+
+                System.out.println(pedido.toString());  // Exibe a confirmação do pedido
+                pinNumber++;
+            }
+        }
+    }
+
 		
     
      
 }
-}
+	
+
