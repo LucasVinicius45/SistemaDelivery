@@ -24,12 +24,12 @@ public class ControleDeTeste {
 		DeliveryController clienteController = new DeliveryController();
 		
 		for (Cliente cliente : listaCliente) {
-		    clienteController.incluirCliente(cliente.getEndereco(), cliente.getNome(), cliente.getEmail());
+		    // clienteController.incluirCliente(cliente.getEndereco(), cliente.getNome(), cliente.getEmail());
 		    
 	}
 		
 		DeliveryController estabelecimentoController = new DeliveryController(true);
-		estabelecimentoController.incluirEstabelecimento(estabelecimento.getEndereco(), estabelecimento);
+		// estabelecimentoController.incluirEstabelecimento(estabelecimento.getEndereco(), estabelecimento);
 
 		
 		List<Motoboy> listaMotoboy = criarListaMotoboys();
@@ -37,19 +37,28 @@ public class ControleDeTeste {
 		DeliveryController motoboyController = new DeliveryController();
 		
 		for (Motoboy motoboy : listaMotoboy) {
-		    motoboyController.incluirMotoboy(motoboy);
+		    // motoboyController.incluirMotoboy(motoboy);
 		    
 		}
-	
-		DeliveryController pedidoController = new DeliveryController();
+		List<Pedido> listaPedido = new ArrayList<>();
+		for(Pedido pedido : listaPedido) {
+			
+			DeliveryController pedidoController = new DeliveryController();
+			pedidoController.incluirPedido(pedido);
+			System.out.println("Funciona");
+		}
 		
 		
 		GerenciadorDelivery gerenciador = new GerenciadorDelivery();
 		gerenciador.setListaPedido(new ArrayList <Pedido>());
+		
 		 try { gerenciador.criarPedidos(listaCliente, estabelecimento, listaMotoboy);
 		 } catch(DeliveryException e) { 
 			 System.err.println("Erro: " + e.getMessage()); // Para tratar o erro de forma apropriada }
 		 }
+		
+		
+			
 		 
 	}
 

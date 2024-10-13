@@ -32,13 +32,13 @@ public class PedidoDAOImpl implements PedidoDAO {
 	}
 
 	@Override
-	public void incluirPedido(Pedido pedido, Cliente cliente, Estabelecimento estabelecimento, Motoboy motoboy) {
+	public void incluirPedido(Pedido pedido) {
 		String sql = "INSERT INTO PEDIDO (EMAIL_CLIENTE, NOME_ESTABELECIMENTO, ID_MOTOBOY) VALUES (?, ?, ?)";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql, new String[]{"ID"})) { // O "new String[]{"ID"}" faz referência ao campo de chave primária
-            stmt.setString(1, cliente.getEmail());
-            stmt.setString(2, estabelecimento.getNome());
-            stmt.setLong(3, motoboy.getId());
+            stmt.setString(1, pedido.getCliente().getEmail());
+            stmt.setString(2, pedido.getEstabelecimento().getNome());
+            stmt.setLong(3, pedido.getMotoboy().getId());
 
            
 

@@ -54,8 +54,8 @@ public class DeliveryController {
 	public void incluirMotoboy(Motoboy motoboy) {
 		motoboyDAO.incluirMotoboy(motoboy);
 	}
-	public void incluirPedido(Pedido pedido, Cliente cliente, Estabelecimento estabelecimento, Motoboy motoboy) {
-		pedidoDAO.incluirPedido(pedido, cliente, estabelecimento, motoboy);
+	public void incluirPedido(Pedido pedido) {
+		pedidoDAO.incluirPedido(pedido);
 	}
 
 

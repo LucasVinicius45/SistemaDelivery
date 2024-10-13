@@ -1,13 +1,10 @@
 package br.com.restaurante.sistemadelivery.dao;
 
-import br.com.restaurante.sistemadelivery.model.Cliente;
-import br.com.restaurante.sistemadelivery.model.Estabelecimento;
-import br.com.restaurante.sistemadelivery.model.Motoboy;
 import br.com.restaurante.sistemadelivery.model.Pedido;
 
 public interface PedidoDAO {
 	
 public void criarTabelaPedido();
 	
-	public void incluirPedido(Pedido pedido, Cliente cliente, Estabelecimento estabelecimento, Motoboy motoboy);
+	public void incluirPedido(Pedido pedido);
 }
