@@ -7,16 +7,18 @@ public class Cliente {
 	 */
 	private String nome;
 	private Endereco endereco;
+	private String email; 
 
 	
 	/**
 	 * Construtor
 	 * @param nome
 	 */
-	public Cliente(String nome, Endereco endereco) {
+	public Cliente(String nome, String email, Endereco endereco) {
 		super();
 		this.nome = nome;
 		this.endereco = endereco;
+		this.email = email;
 	}
 
 	/**
@@ -39,13 +41,23 @@ public class Cliente {
 		this.endereco = endereco;
 	}
 	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	
 	/**
 	 * Apresenta informações sobre o Cliente
 	 */
 	public void apresentarCliente() {
-		System.out.println("Cliente: " + this.nome + ", Endereço: " + this.getEndereco());
+		System.out.println("Cliente: " + this.nome + ", Endereço: " + this.getEndereco() + ", Email: "+ this.getEmail());
 	}
 
+	
 	
 
 }

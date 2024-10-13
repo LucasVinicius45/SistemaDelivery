@@ -30,16 +30,15 @@ public class EstabelecimentoDAOImpl implements EstabelecimentoDAO {
 
 	@Override
 	public void incluirEstabelecimento(Endereco endereco, Estabelecimento estabelecimento) {
-	    // Instancia o EnderecoDAOImpl para inserir o endereço
+
 	    EnderecoDAO enderecoDAO = new EnderecoDAOImpl();
-	    
-	    // Primeiro, insere o endereço
+	   
 	    Endereco enderecoInserido = enderecoDAO.incluirEndereco(endereco);
 	    
 	    if (enderecoInserido != null) {
-	        // Depois, insere o estabelecimento utilizando o ID do endereço inserido
+	       
 	        String sqlEstabelecimento = "INSERT INTO ESTABELECIMENTO (ENDERECO_ID, NOME, TEL) VALUES (?, ?, ?)";
-	        
+	        System.out.println("Incluindo um estabelecimento: ");
 	        try (PreparedStatement stmtEstabelecimento = conn.prepareStatement(sqlEstabelecimento)) {
 	            stmtEstabelecimento.setLong(1, enderecoInserido.getId()); // Usa o ID do endereço inserido
 	            stmtEstabelecimento.setString(2, estabelecimento.getNome());
@@ -49,7 +48,7 @@ public class EstabelecimentoDAOImpl implements EstabelecimentoDAO {
 	            
 	            if (rowsAffectedEstabelecimento > 0) {
 	                conn.commit(); // Confirma a transação
-	                System.out.println("Estabelecimento de Sushi inserido com sucesso!");
+	                System.out.println("Estabelecimento inserido com sucesso!");
 	            } else {
 	                System.out.println("Nenhuma linha inserida para o estabelecimento.");
 	            }

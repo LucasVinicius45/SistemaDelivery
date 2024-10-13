@@ -17,13 +17,23 @@ public class ControleDeTeste {
 	public static void main(String[] args) {
 
 		Estabelecimento estabelecimento = criarEstabelecimento();
+		
+		
+		List<Cliente> listaCliente = criarListaClientes();
+		mostrarListaCliente(listaCliente);
+		DeliveryController clienteController = new DeliveryController();
+		
+		for (Cliente cliente : listaCliente) {
+		    clienteController.incluirCliente(cliente.getEndereco(), cliente.getNome(), cliente.getEmail());
+		    
+		}
 		DeliveryController estabelecimentoController = new DeliveryController(true);
 		estabelecimentoController.incluirEstabelecimento(estabelecimento.getEndereco(), estabelecimento);
+
 		
-		List<Cliente> listaCliente = criarListaClientes(); 
 		List<Motoboy> listaMotoboy = criarListaMotoboys();
 		mostrarListaMotoboy(listaMotoboy); 
-		mostrarListaCliente(listaCliente);
+		
 		GerenciadorDelivery gerenciador = new GerenciadorDelivery();
 		gerenciador.setListaPedido(new ArrayList <Pedido>());
 		 try { gerenciador.criarPedidos(listaCliente, estabelecimento, listaMotoboy);
@@ -36,18 +46,18 @@ public class ControleDeTeste {
 	public static List<Cliente> criarListaClientes() {
 		List<Cliente> listaCliente = new ArrayList<>();
 
-		listaCliente.add(new Cliente("Chico", new Endereco("São Paulo", "Tatuapé", "030300")));
-		listaCliente.add(new Cliente("Tony", new Endereco("São Paulo", "Belém", "050200")));
-		listaCliente.add(new Cliente("Ricardo", new Endereco("São Paulo", "Brás", "087234")));
-		listaCliente.add(new Cliente("Murilo", new Endereco("São Paulo", "Mooca", "070700")));
+		listaCliente.add(new Cliente("Chico", "Chico@gmail.com", new Endereco("São Paulo", "Tatuapé", "030300")));
+		listaCliente.add(new Cliente("Tony", "Tony@gmail.com", new Endereco("São Paulo", "Belém","050200"))); 
+		listaCliente.add(new Cliente("Ricardo", "Ricardo@gmail.com", new Endereco("São Paulo", "Brás", "087234"))); 
+		listaCliente.add(new Cliente("Murilo", "Murilo@gmail.com", new Endereco("São Paulo", "Mooca", "070700")));
 
 		return listaCliente;
 	}
 
 	// Cria o estabelecimento
 	public static Estabelecimento criarEstabelecimento() {
-		Endereco endereco = new Endereco("São Paulo", "Tatuapé", "020700");
-		Estabelecimento estabelecimento = new Estabelecimento("Mata Fome Sushi 5", "Sushi", endereco, "(11) 2336-7321");
+		Endereco endereco = new Endereco("São Paulo", "Tatuapé", "070300");
+		Estabelecimento estabelecimento = new Estabelecimento("Mata Fome Sushi 51", "Sushi", endereco, "(11) 2336-7321");
 		return estabelecimento;
 	}
 
