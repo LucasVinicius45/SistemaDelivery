@@ -5,7 +5,7 @@ public class Pedido {
 	/**
 	 * Campos da classe Pedido
 	 */
-	
+	private long id;
 	private String numeroPedido;
 	private String pin;
 	private Estabelecimento estabelecimento;
@@ -74,5 +74,13 @@ public class Pedido {
 	public String toString() {
 		return getNumeroPedido() + ": Motoboy " + getMotoboy().getNome() + ", pegou o pedido no Estabelecimento " + getEstabelecimento().getNome() + " e está indo para o cliente " + getCliente().getNome();
 		
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 }

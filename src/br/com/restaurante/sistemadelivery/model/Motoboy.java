@@ -5,6 +5,7 @@ public class Motoboy {
 	/**
 	 * Definindo campos da classe Motoboy
 	 */
+	private long id;
 	private String nome;
 	private String veiculo;
 	private boolean  ehOcupado;
@@ -50,5 +51,13 @@ public class Motoboy {
 	 */
 	public void apresentarMotoboy() {
 		System.out.println(this.nome + ", " + this.veiculo + ", está ocupado? " + this.ehOcupado);
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 }

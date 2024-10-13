@@ -26,21 +26,35 @@ public class ControleDeTeste {
 		for (Cliente cliente : listaCliente) {
 		    clienteController.incluirCliente(cliente.getEndereco(), cliente.getNome(), cliente.getEmail());
 		    
-		}
+	}
+		
 		DeliveryController estabelecimentoController = new DeliveryController(true);
 		estabelecimentoController.incluirEstabelecimento(estabelecimento.getEndereco(), estabelecimento);
 
 		
 		List<Motoboy> listaMotoboy = criarListaMotoboys();
 		mostrarListaMotoboy(listaMotoboy); 
+		DeliveryController motoboyController = new DeliveryController();
+		
+		for (Motoboy motoboy : listaMotoboy) {
+		    motoboyController.incluirMotoboy(motoboy);
+		    
+		}
+	
+		DeliveryController pedidoController = new DeliveryController();
+		
 		
 		GerenciadorDelivery gerenciador = new GerenciadorDelivery();
 		gerenciador.setListaPedido(new ArrayList <Pedido>());
 		 try { gerenciador.criarPedidos(listaCliente, estabelecimento, listaMotoboy);
-		 } catch (DeliveryException e) { System.err.println("Erro: " + e.getMessage()); // Para tratar o erro de forma apropriada }
+		 } catch(DeliveryException e) { 
+			 System.err.println("Erro: " + e.getMessage()); // Para tratar o erro de forma apropriada }
+		 }
 		 
 	}
-	}
+
+		 
+//	}
 
 	// Cria Lista de Clientes
 	public static List<Cliente> criarListaClientes() {
