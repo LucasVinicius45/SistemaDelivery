@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import br.com.restaurante.sistemadelivery.model.Endereco;
 import br.com.restaurante.sistemadelivery.util.ConexaoBD;
@@ -22,11 +23,31 @@ public class EnderecoDAOImpl implements EnderecoDAO {
 			e.printStackTrace();
 		}
 	}
+	
 	@Override
 	public void criarTabelaEndereco() {
-		// TODO Auto-generated method stub
+	    String tabelaQuery = "SELECT TABLE_NAME FROM ALL_TABLES WHERE TABLE_NAME = 'ENDERECO'";
+	    String sql = "CREATE TABLE ENDERECO (" +
+	                 "id NUMBER NOT NULL, " +
+	                 "cidade VARCHAR2(30) NOT NULL, " +
+	                 "bairro VARCHAR2(30) NOT NULL, " +
+	                 "cep VARCHAR2(30) NOT NULL, " +
+	                 "CONSTRAINT pk_endereco_id PRIMARY KEY(id))";
 
+	    try (Statement stmt = conn.createStatement();
+	         ResultSet rs = stmt.executeQuery(tabelaQuery)) {
+	        
+	        if (!rs.next()) { 
+	            stmt.executeUpdate(sql);
+	            System.out.println("Tabela ENDERECO criada com sucesso.");
+	        } else {
+	            System.out.println("A tabela ENDERECO já existe.");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 	}
+
 
 	@Override
 	public Endereco incluirEndereco(Endereco endereco) {
@@ -40,7 +61,7 @@ public class EnderecoDAOImpl implements EnderecoDAO {
 
 	        int rowsAffected = stmt.executeUpdate();
 	        if (rowsAffected > 0) {
-	            conn.commit(); // Confirma a transação
+	            conn.commit(); 
 	            System.out.println("Endereço inserido com sucesso!");
 	            
 	            String query = "SELECT id FROM ENDERECO WHERE CEP = ? AND CIDADE = ? AND BAIRRO = ?";
@@ -52,28 +73,67 @@ public class EnderecoDAOImpl implements EnderecoDAO {
 	                try (ResultSet rs = stmtSelect.executeQuery()) {
 	                    if (rs.next()) {
 	                        long id = rs.getLong("id");
-	                        endereco.setId(id); // Atualiza o objeto com o ID gerado
+	                        endereco.setId(id); 
 	                        System.out.println("ID do endereço: " + id);
 	                    }
 	                }
 	            }
 
-	            return endereco; // Retorna o objeto Endereco atualizado
+	            return endereco; 
 	        } else {
 	            System.out.println("Nenhuma linha inserida.");
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	        try {
-	            conn.rollback(); // Desfaz a transação em caso de erro
+	            conn.rollback(); 
 	        } catch (SQLException rollbackException) {
 	            rollbackException.printStackTrace();
 	        }
 	    }
 	    
-	    return null; // Retorna null caso a inserção falhe
+	    return null; 
 	}
 
+	@Override
+	public void criarSequenceEndereco() {
+	    String sequenceQuery = "SELECT SEQUENCE_NAME FROM ALL_SEQUENCES WHERE SEQUENCE_NAME = 'ENDERECO_SEQ'";
+	    String sql = "CREATE SEQUENCE endereco_seq START WITH 1 INCREMENT BY 1 NOCACHE";
+	    
+	    try (Statement stmt = conn.createStatement(); 
+	         ResultSet rs = stmt.executeQuery(sequenceQuery)) {
+	        
+	       
+	        if (!rs.next()) { 
+	            stmt.executeUpdate(sql);
+	            System.out.println("Sequence criada");
+	        } else {
+	            System.out.println("A sequence já existe");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	@Override
+	public void criarTriggerEndereco() {
+	    String sql = "CREATE OR REPLACE TRIGGER endereco_bir " +
+	                 "BEFORE INSERT ON ENDERECO " +
+	                 "FOR EACH ROW " +
+	                 "BEGIN " +
+	                 "  IF :NEW.id IS NULL THEN " +
+	                 "    SELECT endereco_seq.NEXTVAL INTO :NEW.id FROM dual; " +
+	                 "  END IF; " +
+	                 "END;";
 
+	    try (Statement stmt = conn.createStatement()) {
+	        stmt.executeUpdate(sql);
+	        System.out.println("Trigger 'endereco_bir' criado com sucesso.");
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
 
 }
+

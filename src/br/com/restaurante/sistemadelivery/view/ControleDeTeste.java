@@ -16,52 +16,65 @@ public class ControleDeTeste {
 
     public static void main(String[] args) {
 
-        // Criação do estabelecimento
-        Estabelecimento estabelecimento = criarEstabelecimento();
         
-        // Criação da lista de clientes e exibição
+    	
+    	Estabelecimento estabelecimento = criarEstabelecimento();
+    	
+        // Cria script sql
+    	
+        DeliveryController clienteController = new DeliveryController();
+        DeliveryController tabelaController = new DeliveryController();
+        DeliveryController estabelecimentoController = new DeliveryController(true);
+        tabelaController.criarTabelaEndereco();
+        clienteController.criarTabelaCliente();
+        estabelecimentoController.criarTabelaEstabelecimento();
+        tabelaController.criarSequenceEndereco();
+        tabelaController.criarTriggerEndereco();
+        
+        // Incluindo no Banco de Dados
+        
         List<Cliente> listaCliente = criarListaClientes();
         mostrarListaCliente(listaCliente);
-        
-        DeliveryController clienteController = new DeliveryController();
-        
-        // Inserção dos clientes no banco de dados
         for (Cliente cliente : listaCliente) {
-            clienteController.incluirCliente(cliente.getEndereco(), cliente.getNome(), cliente.getEmail());
+        	
+             clienteController.incluirCliente(cliente.getEndereco(), cliente.getNome(), cliente.getEmail());
+            
         }
-        
-        // Criação e inserção do estabelecimento no banco de dados
-        DeliveryController estabelecimentoController = new DeliveryController(true);
         estabelecimentoController.incluirEstabelecimento(estabelecimento.getEndereco(), estabelecimento);
         
-        // Criação da lista de motoboys e exibição
-        List<Motoboy> listaMotoboy = criarListaMotoboys();
-        mostrarListaMotoboy(listaMotoboy);
         
-        DeliveryController motoboyController = new DeliveryController();
         
-        // Inserção dos motoboys no banco de dados
-        for (Motoboy motoboy : listaMotoboy) {
-            motoboyController.incluirMotoboy(motoboy);
-        }
-        
-        // Gerenciamento e criação dos pedidos
-        GerenciadorDelivery gerenciador = new GerenciadorDelivery();
-        gerenciador.setListaPedido(new ArrayList<>());  // Inicializa a lista de pedidos
-
-        try {
-            // Criação dos pedidos e exibição
-            gerenciador.criarPedidos(listaCliente, estabelecimento, listaMotoboy);
-        } catch (DeliveryException e) {
-            System.err.println("Erro: " + e.getMessage()); // Trata exceção caso não haja motoboys disponíveis
-        }
-        
-        // Exibição e inserção dos pedidos no banco de dados
-        DeliveryController pedidoController = new DeliveryController();
-        for (Pedido pedido : gerenciador.getListaPedido()) {
-            pedidoController.incluirPedido(pedido);
-            System.out.println("Pedido inserido: " + pedido.toString());
-        }
+       
+       
+//        
+//        // Criação da lista de motoboys e exibição
+//        List<Motoboy> listaMotoboy = criarListaMotoboys();
+//        mostrarListaMotoboy(listaMotoboy);
+//        
+//        DeliveryController motoboyController = new DeliveryController();
+//        
+//        // Inserção dos motoboys no banco de dados
+//        for (Motoboy motoboy : listaMotoboy) {
+//            motoboyController.incluirMotoboy(motoboy);
+//        }
+//        
+//        // Gerenciamento e criação dos pedidos
+//        GerenciadorDelivery gerenciador = new GerenciadorDelivery();
+//        gerenciador.setListaPedido(new ArrayList<>());  // Inicializa a lista de pedidos
+//
+//        try {
+//            // Criação dos pedidos e exibição
+//            gerenciador.criarPedidos(listaCliente, estabelecimento, listaMotoboy);
+//        } catch (DeliveryException e) {
+//            System.err.println("Erro: " + e.getMessage()); // Trata exceção caso não haja motoboys disponíveis
+//        }
+//        
+//        // Exibição e inserção dos pedidos no banco de dados
+//        DeliveryController pedidoController = new DeliveryController();
+//        for (Pedido pedido : gerenciador.getListaPedido()) {
+//            pedidoController.incluirPedido(pedido);
+//            System.out.println("Pedido inserido: " + pedido.toString());
+//        }
     }
 
     // Cria uma lista de Clientes

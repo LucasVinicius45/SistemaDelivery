@@ -43,12 +43,31 @@ public class DeliveryController {
 		estabelecimentoDAO.incluirEstabelecimento(enderecoID, estabelecimento);
 	}
 	
+	public void criarTabelaEstabelecimento() {
+		estabelecimentoDAO.criarTabelaEstabelecimento();
+	}
+	
 	public void incluirEndereco(Endereco endereco) {
 		enderecoDAO.incluirEndereco(endereco);
 	}
 	
+	public void criarTabelaEndereco() {
+		enderecoDAO.criarTabelaEndereco();
+	}
+	
+	public void criarSequenceEndereco() {
+		enderecoDAO.criarSequenceEndereco();
+	}
+	public void criarTriggerEndereco() {
+		enderecoDAO.criarTriggerEndereco();
+	}
+	
 	public void incluirCliente(Endereco enderecoID, String nome, String email) {
 		clienteDAO.incluirCliente(enderecoID, nome, email);
+	}
+	
+	public void criarTabelaCliente() {
+		clienteDAO.criarTabelaCliente();
 	}
 	
 	public void incluirMotoboy(Motoboy motoboy) {

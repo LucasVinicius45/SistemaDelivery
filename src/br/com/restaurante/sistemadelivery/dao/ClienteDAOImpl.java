@@ -2,9 +2,10 @@ package br.com.restaurante.sistemadelivery.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
-import br.com.restaurante.sistemadelivery.model.Cliente;
 import br.com.restaurante.sistemadelivery.model.Endereco;
 import br.com.restaurante.sistemadelivery.util.ConexaoBD;
 
@@ -24,9 +25,42 @@ public class ClienteDAOImpl implements ClienteDAO {
 	}
 	@Override
 	public void criarTabelaCliente() {
-		// TODO Auto-generated method stub
+	    String tabelaQuery = "SELECT TABLE_NAME FROM USER_TABLES WHERE TABLE_NAME = 'CLIENTE'";
+	    String sql = "CREATE TABLE CLIENTE (" +
+	                 "endereco_Id NUMBER NOT NULL, " +
+	                 "email VARCHAR2(120) NOT NULL, " +
+	                 "nome VARCHAR2(50) NOT NULL, " +
+	                 "CONSTRAINT pk_cliente_email PRIMARY KEY(email), " +
+	                 "FOREIGN KEY (endereco_Id) REFERENCES ENDERECO(id))";
 
+	    Statement stmt = null;
+	    ResultSet rs = null;
+
+	    try {
+	        stmt = conn.createStatement();
+	        rs = stmt.executeQuery(tabelaQuery);
+
+	        // Verifica se a tabela já existe
+	        if (!rs.next()) {
+	            stmt.executeUpdate(sql);
+	            conn.commit();  // Confirma a criação da tabela
+	            System.out.println("Tabela CLIENTE criada com sucesso.");
+	        } else {
+	            System.out.println("A tabela CLIENTE já existe.");
+	        }
+	    } catch (SQLException e) {
+	        System.err.println("Erro ao criar a tabela CLIENTE: " + e.getMessage());
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) rs.close();
+	            if (stmt != null) stmt.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
+
 
 	@Override
 	public void incluirCliente(Endereco endereco, String nome, String email) {

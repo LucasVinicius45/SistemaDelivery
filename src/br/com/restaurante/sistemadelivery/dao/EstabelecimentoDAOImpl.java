@@ -2,7 +2,9 @@ package br.com.restaurante.sistemadelivery.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import br.com.restaurante.sistemadelivery.model.Endereco;
 import br.com.restaurante.sistemadelivery.model.Estabelecimento;
@@ -24,7 +26,27 @@ public class EstabelecimentoDAOImpl implements EstabelecimentoDAO {
 	}
 	@Override
 	public void criarTabelaEstabelecimento() {
-		// TODO Auto-generated method stub
+		String tabelaQuery = "SELECT TABLE_NAME FROM ALL_TABLES WHERE TABLE_NAME = 'ESTABELECIMENTO'";
+	    String sql = "CREATE TABLE ESTABELECIMENTO (" +
+	                 "endereco_Id NUMBER NOT NULL, " +
+	                 "nome VARCHAR2(50) NOT NULL, " +
+	                 "tel VARCHAR2(20) NOT NULL," + 
+	                 "CONSTRAINT pk_estabelecimento_nome PRIMARY KEY(nome)," +
+	                 "CONSTRAINT fk_endereco_estabelecimento FOREIGN KEY (endereco_Id) REFERENCES ENDERECO(id))";
+	                
+
+	    try (Statement stmt = conn.createStatement();
+	         ResultSet rs = stmt.executeQuery(tabelaQuery)) {
+	        
+	        if (!rs.next()) { 
+	            stmt.executeUpdate(sql);
+	            System.out.println("Tabela ESTABELECIMENTO criada com sucesso.");
+	        } else {
+	            System.out.println("A tabela ESTABELECIMENTO já existe.");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 
 	}
 
