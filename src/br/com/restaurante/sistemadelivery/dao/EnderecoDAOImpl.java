@@ -106,9 +106,9 @@ public class EnderecoDAOImpl implements EnderecoDAO {
 	       
 	        if (!rs.next()) { 
 	            stmt.executeUpdate(sql);
-	            System.out.println("Sequence criada");
+	            System.out.println("Sequence Endereço criada");
 	        } else {
-	            System.out.println("A sequence já existe");
+	            System.out.println("A sequence ENDEREÇO já existe");
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -128,12 +128,11 @@ public class EnderecoDAOImpl implements EnderecoDAO {
 
 	    try (Statement stmt = conn.createStatement()) {
 	        stmt.executeUpdate(sql);
-	        System.out.println("Trigger 'endereco_bir' criado com sucesso.");
+	        System.out.println("Trigger 'endereco_bir' compilado com sucesso.");
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
 	}
 	
-
 }
 

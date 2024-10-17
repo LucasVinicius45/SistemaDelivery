@@ -73,8 +73,33 @@ public class DeliveryController {
 	public void incluirMotoboy(Motoboy motoboy) {
 		motoboyDAO.incluirMotoboy(motoboy);
 	}
+	
+	public void criarTabelaMotoboy() {
+		motoboyDAO.criarTabelaMotoboy();
+	}
+	
+	public void criarSequenceMotoboy() {
+		motoboyDAO.criarSequenceMotoboy();
+	}
+	
+	public void criarTriggerMotoboy() {
+		motoboyDAO.criarTriggerMotoboy();
+	}
+	
 	public void incluirPedido(Pedido pedido) {
 		pedidoDAO.incluirPedido(pedido);
+	}
+	
+	public void criarTabelaPedido() {
+		pedidoDAO.criarTabelaPedido();
+	}
+	
+	public void criarSequencePedido() {
+		pedidoDAO.criarSequencePedido();
+	}
+	
+	public void criarTriggerPedido() {
+		pedidoDAO.criarTriggerPedido();
 	}
 
 

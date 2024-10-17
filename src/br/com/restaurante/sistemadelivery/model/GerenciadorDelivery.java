@@ -87,7 +87,10 @@ public class GerenciadorDelivery {
 
                 // Insere o pedido no banco de dados
                 PedidoDAOImpl pedidoDAO = new PedidoDAOImpl();
+                // pedidoDAO.criarTabelaPedido();
+                // pedidoDAO.criarTriggerPedido();
                 pedidoDAO.incluirPedido(pedido);
+                
 
                 System.out.println(pedido.toString());  // Exibe a confirmação do pedido
                 pinNumber++;
